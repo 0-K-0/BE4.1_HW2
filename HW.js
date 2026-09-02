@@ -23,9 +23,10 @@ const allHotelList = async () => {
   return hotels;
 };
 app.get("/hotels", async (req, res) => {
-  const allHotels = await allHotelList();
+
 
   try {
+      const allHotels = await allHotelList();
     if (allHotels.length != 0) {
       res.status(200).json(allHotels);
     } else {
@@ -49,7 +50,7 @@ app.get("/hotels/:hotelName", async (req, res) => {
   const name = req.params.hotelName;
   const result = await ShowHotelByName(name);
   try {
-    if (result.length != 0) {
+    if (result) {
       res.status(200).json(result);
     } else {
       res.status(404).json({ error: "Hotels Not found" });
@@ -68,7 +69,7 @@ app.get("/hotels/directory/:phoneNumber", async (req, res) => {
   const hotelInfo = req.params.phoneNumber;
   const result = await ShowHotelByPhoneNum(hotelInfo);
   try {
-    if (result.length != 0) {
+    if (result) {
       res.status(200).json(result);
     } else {
       res.status(404).json({ error: "Hotels Not found" });
@@ -87,7 +88,7 @@ app.get("/hotels/rating/:hotelRating", async (req, res) => {
   const hotelInfo = req.params.hotelRating;
   const result = await ShowHotelByRating(hotelInfo);
   try {
-    if (result.length != 0) {
+    if (result) {
       res.status(200).json(result);
     } else {
       res.status(404).json({ error: "Hotels Not found" });
@@ -98,7 +99,7 @@ app.get("/hotels/rating/:hotelRating", async (req, res) => {
 });
 //5
 const ShowHotelByCategory = async (category) => {
-  const hotelInfo = await HotelModel.findOne({ category: category });
+  const hotelInfo = await HotelModel.find({ category: category });
   return hotelInfo;
 };
 
